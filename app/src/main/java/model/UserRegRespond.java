@@ -1,5 +1,5 @@
 
-package com.example.org1.stockex;
+package control;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
