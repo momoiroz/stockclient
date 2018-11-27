@@ -1,5 +1,8 @@
-package com.example.org1.stockex;
+package itf;
 
+import model.RegisterObject;
+
+import model.UserRegRespond;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;

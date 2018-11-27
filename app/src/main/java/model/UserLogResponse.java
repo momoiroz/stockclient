@@ -1,16 +1,13 @@
 
-package control;
+package model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserRegRespond {
+public class UserLogRespond {
 
     @SerializedName("success")
     @Expose
     private Boolean success;
-    @SerializedName("secret")
-    @Expose
-    private String secret;
     @SerializedName("message")
     @Expose
     private String message;
@@ -24,14 +21,6 @@ public class UserRegRespond {
 
     public void setSuccess(Boolean success) {
         this.success = success;
-    }
-
-    public String getSecret() {
-        return secret;
-    }
-
-    public void setSecret(String secret) {
-        this.secret = secret;
     }
 
     public String getMessage() {
