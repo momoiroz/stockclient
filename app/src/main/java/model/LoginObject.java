@@ -1,14 +1,14 @@
 package model;
 
-public class RegisterObject {
+public class LoginObject {
     private String username;
     private String orgName;
     private String password;
 
-    public RegisterObject() {
+    public LoginObject() {
     }
 
-    public RegisterObject(String username, String orgName, String password) {
+    public LoginObject(String username, String orgName, String password) {
         this.username = username;
         this.orgName = orgName;
         this.password = password;

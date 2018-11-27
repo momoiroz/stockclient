@@ -2,6 +2,6 @@ package itf;
 
 import model.UserLogResponse;
 
-public interface LoginMessage {
-    UserLogResponse 
+public interface LoginResponse {
+    void invokeResponse(UserLogResponse ulr);
 }

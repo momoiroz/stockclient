@@ -3,35 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/main_layout"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Stock Exchange"
-            android:textSize="30dp" />
-
-        <Button
-            android:id="@+id/btn_register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Register"
-            android:textSize="30dp" />
-        <EditText
-            android:id="@+id/edt_holder_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Your name here"
-            android:gravity="center"
-            android:visibility="visible"/>
-    </LinearLayout>
 </RelativeLayout>

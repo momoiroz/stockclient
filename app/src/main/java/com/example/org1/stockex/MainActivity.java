@@ -1,51 +1,40 @@
 package com.example.org1.stockex;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import itf.LoginResponse;
+import model.UserLogResponse;
 
-public class MainActivity extends AppCompatActivity {
-    Button mBtnRegister;
-    EditText mEdtHolderName;
+public class MainActivity extends AppCompatActivity implements LoginResponse {
+    LoginFragment lf;
+    UserLogResponse ulr;
+    LoginResponse lr = this;
+    SharedPreferences sharedPref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mBtnRegister = findViewById(R.id.btn_register);
-        mEdtHolderName = findViewById(R.id.edt_holder_name);
-        mBtnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String name = mEdtHolderName.getText().toString();
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://wibuchashu.ddns.net:4000/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-                RegisterObject ro = new RegisterObject(name,"Org1");
-                RegisterService rs = retrofit.create(RegisterService.class);
-                rs.register(ro).enqueue(new Callback<UserRegRespond>() {
-                    @Override
-                    public void onResponse(Call<UserRegRespond> call, Response<UserRegRespond> response) {
-                        Log.e("token", response.body().getToken());
-                        mEdtHolderName.setText(response.body().getToken());
-                    }
-
-                    @Override
-                    public void onFailure(Call<UserRegRespond> call, Throwable t) {
-
-                    }
-                });
-            }
-        });
+        sharedPref = this.getSharedPreferences("mypref", MODE_PRIVATE);
+        lf = new LoginFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, lf).commit();
+    }
+    @Override
+    public void invokeResponse(UserLogResponse ulr) {
+        this.ulr = ulr;
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("token", ulr.getToken());
+        editor.commit();
+        if (!ulr.getSuccess()) {
+            Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Login successfully", Toast.LENGTH_SHORT).show();
+        }
     }
 }
+
+

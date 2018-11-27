@@ -3,7 +3,7 @@ package model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserLogRespond {
+public class UserLogResponse {
 
     @SerializedName("success")
     @Expose
@@ -14,6 +14,12 @@ public class UserLogRespond {
     @SerializedName("token")
     @Expose
     private String token;
+
+    public UserLogResponse(Boolean success, String message, String token) {
+        this.success = success;
+        this.message = message;
+        this.token = token;
+    }
 
     public Boolean getSuccess() {
         return success;

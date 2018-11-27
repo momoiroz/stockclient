@@ -1,13 +1,13 @@
 package itf;
 
-import model.RegisterObject;
+import model.LoginObject;
 
-import model.UserRegRespond;
+import model.UserLogResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
-public interface RegisterService {
-    @POST("users")
-    Call<UserRegRespond> register(@Body RegisterObject registerObject);
+public interface LoginService {
+    @POST("login")
+    Call<UserLogResponse> register(@Body LoginObject loginObject);
 }
