@@ -1,7 +1,7 @@
 package itf;
 
-import model.UserLogResponse;
+import model.UserLogResponseModel;
 
 public interface LoginResponse {
-    void invokeResponse(UserLogResponse ulr);
+    void invokeLoginResponse(UserLogResponseModel ulr);
 }
