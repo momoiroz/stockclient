@@ -3,6 +3,8 @@ package com.example.org1.stockex;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import itf.LoginResponse;
@@ -34,8 +36,37 @@ public class MainActivity extends AppCompatActivity implements LoginResponse {
             Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Login successfully", Toast.LENGTH_SHORT).show();
+            af = new AppFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,af,"app_frag").commit();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_layout, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logout:
+                logout();
+                break;
+            default:break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    public void logout(){
+        af.onDetach();
+        af.onDestroy();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,lf,"login").commit();
     }
 }
 

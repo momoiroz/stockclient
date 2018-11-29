@@ -86,11 +86,13 @@ public class OrderActivity extends AppCompatActivity implements InvokeResponseIn
             @Override
             public void onClick(View v) {
                 mBtnBuy.setEnabled(false);
+                mBtnBack.setEnabled(false);
                 if (checkCondition()) {
                     String[] args = setArgs();
                     api.invokeOrderRequest(args);
                 } else {
                     mBtnBuy.setEnabled(true);
+                    mBtnBack.setEnabled(true);
                 }
 
             }

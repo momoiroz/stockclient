@@ -7,6 +7,8 @@ import android.widget.Toast;
 import com.example.org1.stockex.AppFragment;
 import com.example.org1.stockex.OrderActivity;
 import com.example.org1.stockex.MainActivity;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -17,6 +19,8 @@ import itf.InvokeResponseInterface;
 import itf.LoginResponse;
 import itf.LoginService;
 import itf.OrderInvokeService;
+import itf.PoolQueryService;
+import itf.PoolResponse;
 import model.HolderQueryResponseModel;
 import model.InvokeBuyObject;
 import model.InvokeResponseModel;
@@ -36,6 +40,7 @@ public class ApiRequest {
     UserLogResponseModel ulr;
     HolderQueryResponseModel hqr;
     InvokeResponseModel ir;
+    JsonElement element;
     private Activity activity;
     SharedPreferences sharedPref;
     OkHttpClient okHttpClient;
@@ -103,11 +108,10 @@ public class ApiRequest {
     }
 
     public void holderRequest() {
-        setClient();
         sharedPref = activity.getSharedPreferences("mypref", activity.MODE_PRIVATE);
         String holder = sharedPref.getString("holder","-");
         token = sharedPref.getString("token","-");
-
+        setClient();
         if (holder.equals("-")||token.equals("-")) {
             HolderResponse hr = (AppFragment) ((MainActivity) activity).getSupportFragmentManager().findFragmentByTag("app_frag");
             hr.invokeHolderResponse(false,hqr);
@@ -130,11 +134,89 @@ public class ApiRequest {
         }
 
     }
-    public void invokeOrderRequest(String[] args) {
+    public void buyPoolRequest(){
+        sharedPref = activity.getSharedPreferences("mypref", activity.MODE_PRIVATE);
+        String holder = sharedPref.getString("holder","-");
+        token = sharedPref.getString("token","-");
         setClient();
+        if (holder.equals("-")||token.equals("-")) {
+            PoolResponse pr = (AppFragment) ((MainActivity) activity).getSupportFragmentManager().findFragmentByTag("app_frag");
+            pr.invokeBuyPoolResponse(false,element);
+        }else{
+            QueryObject queryObject = new QueryObject("buypool");
+            PoolQueryService prs = retrofit.create(PoolQueryService.class);
+            prs.getPool(queryObject).enqueue(new Callback<JsonElement>() {
+                @Override
+                public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+                    element = response.body();
+                    PoolResponse pr = (AppFragment) ((MainActivity) activity).getSupportFragmentManager().findFragmentByTag("app_frag");
+                    pr.invokeBuyPoolResponse(true,element);
+                }
+
+                @Override
+                public void onFailure(Call<JsonElement> call, Throwable t) {
+                    Toast.makeText(activity,"Connection error. Cannot connect to the server!",Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    }
+    public void sellPoolRequest(){
+        sharedPref = activity.getSharedPreferences("mypref", activity.MODE_PRIVATE);
+        String holder = sharedPref.getString("holder","-");
+        token = sharedPref.getString("token","-");
+        setClient();
+        if (holder.equals("-")||token.equals("-")) {
+            PoolResponse pr = (AppFragment) ((MainActivity) activity).getSupportFragmentManager().findFragmentByTag("app_frag");
+            pr.invokeSellPoolResponse(false,element);
+        }else{
+            QueryObject queryObject = new QueryObject("sellpool");
+            PoolQueryService prs = retrofit.create(PoolQueryService.class);
+            prs.getPool(queryObject).enqueue(new Callback<JsonElement>() {
+                @Override
+                public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+                    element = response.body();
+                    PoolResponse pr = (AppFragment) ((MainActivity) activity).getSupportFragmentManager().findFragmentByTag("app_frag");
+                    pr.invokeSellPoolResponse(true,element);
+                }
+
+                @Override
+                public void onFailure(Call<JsonElement> call, Throwable t) {
+                    Toast.makeText(activity,"Connection error. Cannot connect to the server!",Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    }
+    public void matchPoolRequest(){
+        sharedPref = activity.getSharedPreferences("mypref", activity.MODE_PRIVATE);
+        String holder = sharedPref.getString("holder","-");
+        token = sharedPref.getString("token","-");
+        setClient();
+        if (holder.equals("-")||token.equals("-")) {
+            PoolResponse pr = (AppFragment) ((MainActivity) activity).getSupportFragmentManager().findFragmentByTag("app_frag");
+            pr.invokeMatchPoolResponse(false,element);
+        }else{
+            QueryObject queryObject = new QueryObject("matchpool");
+            PoolQueryService prs = retrofit.create(PoolQueryService.class);
+            prs.getPool(queryObject).enqueue(new Callback<JsonElement>() {
+                @Override
+                public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+                    element = response.body();
+                    PoolResponse pr = (AppFragment) ((MainActivity) activity).getSupportFragmentManager().findFragmentByTag("app_frag");
+                    pr.invokeMatchPoolResponse(true,element);
+                }
+
+                @Override
+                public void onFailure(Call<JsonElement> call, Throwable t) {
+                    Toast.makeText(activity,"Connection error. Cannot connect to the server!",Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    }
+    public void invokeOrderRequest(String[] args) {
         sharedPref = activity.getSharedPreferences("mypref", activity.MODE_PRIVATE);
         String holder = sharedPref.getString("holder", "-");
         token = sharedPref.getString("token", "-");
+        setClient();
         if (holder.equals("-") || token.equals("-")) {
             InvokeResponseInterface iri = (OrderActivity) activity;
             iri.invokeResponse(false, ir);
