@@ -112,5 +112,10 @@ public class MatchModel implements Serializable{
         this.date = date;
     }
 
-
+    @Override
+    public String toString() {
+        String s;
+        s="Share: "+ shareName+". Quantity: "+quantity+". Price: "+price+". Time: "+date.toString();
+        return s;
+    }
 }

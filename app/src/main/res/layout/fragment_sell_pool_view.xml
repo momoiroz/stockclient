@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/sell_pool_view"
+    android:tag="sell_pool"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BuyPoolViewFragment">
+
+    <!-- Hmmm view cua m co van det cung nghi the. Chac van de o cai poool area fragment, cho tao tab -->
+    <ListView
+        android:id="@+id/listview_sell"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </ListView>
+
+</LinearLayout>

@@ -5,8 +5,12 @@ import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.example.org1.stockex.AppFragment;
+import com.example.org1.stockex.BuyPoolViewFragment;
+import com.example.org1.stockex.MatchPoolViewFragment;
 import com.example.org1.stockex.OrderActivity;
 import com.example.org1.stockex.MainActivity;
+import com.example.org1.stockex.R;
+import com.example.org1.stockex.SellPoolViewFragment;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
@@ -134,85 +138,85 @@ public class ApiRequest {
         }
 
     }
-    public void buyPoolRequest(){
-        sharedPref = activity.getSharedPreferences("mypref", activity.MODE_PRIVATE);
-        String holder = sharedPref.getString("holder","-");
-        token = sharedPref.getString("token","-");
-        setClient();
-        if (holder.equals("-")||token.equals("-")) {
-            PoolResponse pr = (AppFragment) ((MainActivity) activity).getSupportFragmentManager().findFragmentByTag("app_frag");
-            pr.invokeBuyPoolResponse(false,element);
-        }else{
-            QueryObject queryObject = new QueryObject("buypool");
-            PoolQueryService prs = retrofit.create(PoolQueryService.class);
-            prs.getPool(queryObject).enqueue(new Callback<JsonElement>() {
-                @Override
-                public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
-                    element = response.body();
-                    PoolResponse pr = (AppFragment) ((MainActivity) activity).getSupportFragmentManager().findFragmentByTag("app_frag");
-                    pr.invokeBuyPoolResponse(true,element);
-                }
-
-                @Override
-                public void onFailure(Call<JsonElement> call, Throwable t) {
-                    Toast.makeText(activity,"Connection error. Cannot connect to the server!",Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-    }
-    public void sellPoolRequest(){
-        sharedPref = activity.getSharedPreferences("mypref", activity.MODE_PRIVATE);
-        String holder = sharedPref.getString("holder","-");
-        token = sharedPref.getString("token","-");
-        setClient();
-        if (holder.equals("-")||token.equals("-")) {
-            PoolResponse pr = (AppFragment) ((MainActivity) activity).getSupportFragmentManager().findFragmentByTag("app_frag");
-            pr.invokeSellPoolResponse(false,element);
-        }else{
-            QueryObject queryObject = new QueryObject("sellpool");
-            PoolQueryService prs = retrofit.create(PoolQueryService.class);
-            prs.getPool(queryObject).enqueue(new Callback<JsonElement>() {
-                @Override
-                public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
-                    element = response.body();
-                    PoolResponse pr = (AppFragment) ((MainActivity) activity).getSupportFragmentManager().findFragmentByTag("app_frag");
-                    pr.invokeSellPoolResponse(true,element);
-                }
-
-                @Override
-                public void onFailure(Call<JsonElement> call, Throwable t) {
-                    Toast.makeText(activity,"Connection error. Cannot connect to the server!",Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-    }
-    public void matchPoolRequest(){
-        sharedPref = activity.getSharedPreferences("mypref", activity.MODE_PRIVATE);
-        String holder = sharedPref.getString("holder","-");
-        token = sharedPref.getString("token","-");
-        setClient();
-        if (holder.equals("-")||token.equals("-")) {
-            PoolResponse pr = (AppFragment) ((MainActivity) activity).getSupportFragmentManager().findFragmentByTag("app_frag");
-            pr.invokeMatchPoolResponse(false,element);
-        }else{
-            QueryObject queryObject = new QueryObject("matchpool");
-            PoolQueryService prs = retrofit.create(PoolQueryService.class);
-            prs.getPool(queryObject).enqueue(new Callback<JsonElement>() {
-                @Override
-                public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
-                    element = response.body();
-                    PoolResponse pr = (AppFragment) ((MainActivity) activity).getSupportFragmentManager().findFragmentByTag("app_frag");
-                    pr.invokeMatchPoolResponse(true,element);
-                }
-
-                @Override
-                public void onFailure(Call<JsonElement> call, Throwable t) {
-                    Toast.makeText(activity,"Connection error. Cannot connect to the server!",Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-    }
-    public void invokeOrderRequest(String[] args) {
+//    public void buyPoolRequest(){
+//        sharedPref = activity.getSharedPreferences("mypref", activity.MODE_PRIVATE);
+//        String holder = sharedPref.getString("holder","-");
+//        token = sharedPref.getString("token","-");
+//        setClient();
+//        if (holder.equals("-")||token.equals("-")) {
+//            PoolResponse pr = (BuyPoolViewFragment) ((MainActivity) activity).getSupportFragmentManager().findFragmentById(R.id.buy_pool_view);
+//            pr.invokeBuyPoolResponse(false,element);
+//        }else{
+//            QueryObject queryObject = new QueryObject("buypool");
+//            PoolQueryService prs = retrofit.create(PoolQueryService.class);
+//            prs.getPool(queryObject).enqueue(new Callback<JsonElement>() {
+//                @Override
+//                public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+//                    element = response.body();
+//                    PoolResponse pr = (BuyPoolViewFragment) ((MainActivity) activity).getSupportFragmentManager().findFragmentById(R.id.buy_pool_view);
+//                    pr.invokeBuyPoolResponse(true,element);
+//                }
+//
+//                @Override
+//                public void onFailure(Call<JsonElement> call, Throwable t) {
+//                    Toast.makeText(activity,"Connection error. Cannot connect to the server!",Toast.LENGTH_LONG).show();
+//                }
+//            });
+//        }
+//    }
+//    public void sellPoolRequest(){
+//        sharedPref = activity.getSharedPreferences("mypref", activity.MODE_PRIVATE);
+//        String holder = sharedPref.getString("holder","-");
+//        token = sharedPref.getString("token","-");
+//        setClient();
+//        if (holder.equals("-")||token.equals("-")) {
+//            PoolResponse pr = (SellPoolViewFragment) ((MainActivity) activity).getSupportFragmentManager().findFragmentById(R.id.sell_pool_view);
+//            pr.invokeSellPoolResponse(false,element);
+//        }else{
+//            QueryObject queryObject = new QueryObject("sellpool");
+//            PoolQueryService prs = retrofit.create(PoolQueryService.class);
+//            prs.getPool(queryObject).enqueue(new Callback<JsonElement>() {
+//                @Override
+//                public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+//                    element = response.body();
+//                    PoolResponse pr = (SellPoolViewFragment) ((MainActivity) activity).getSupportFragmentManager().findFragmentById(R.id.sell_pool_view);
+//                    pr.invokeSellPoolResponse(true,element);
+//                }
+//
+//                @Override
+//                public void onFailure(Call<JsonElement> call, Throwable t) {
+//                    Toast.makeText(activity,"Connection error. Cannot connect to the server!",Toast.LENGTH_LONG).show();
+//                }
+//            });
+//        }
+//    }
+//    public void matchPoolRequest(){
+//        sharedPref = activity.getSharedPreferences("mypref", activity.MODE_PRIVATE);
+//        String holder = sharedPref.getString("holder","-");
+//        token = sharedPref.getString("token","-");
+//        setClient();
+//        if (holder.equals("-")||token.equals("-")) {
+//            PoolResponse pr = (MatchPoolViewFragment) ((MainActivity) activity).getSupportFragmentManager().findFragmentById(R.id.match_pool_view);
+//            pr.invokeMatchPoolResponse(false,element);
+//        }else{
+//            QueryObject queryObject = new QueryObject("matchpool");
+//            PoolQueryService prs = retrofit.create(PoolQueryService.class);
+//            prs.getPool(queryObject).enqueue(new Callback<JsonElement>() {
+//                @Override
+//                public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+//                    element = response.body();
+//                    PoolResponse pr = (MatchPoolViewFragment) ((MainActivity) activity).getSupportFragmentManager().findFragmentById(R.id.match_pool_view);
+//                    pr.invokeMatchPoolResponse(true,element);
+//                }
+//
+//                @Override
+//                public void onFailure(Call<JsonElement> call, Throwable t) {
+//                    Toast.makeText(activity,"Connection error. Cannot connect to the server!",Toast.LENGTH_LONG).show();
+//                }
+//            });
+//        }
+//    }
+    public void invokeOrderRequest(InvokeBuyObject ibo) {
         sharedPref = activity.getSharedPreferences("mypref", activity.MODE_PRIVATE);
         String holder = sharedPref.getString("holder", "-");
         token = sharedPref.getString("token", "-");
@@ -221,7 +225,6 @@ public class ApiRequest {
             InvokeResponseInterface iri = (OrderActivity) activity;
             iri.invokeResponse(false, ir);
         } else {
-            InvokeBuyObject ibo = new InvokeBuyObject(args);
             OrderInvokeService ois = retrofit.create(OrderInvokeService.class);
             ois.invokeOrder(ibo).enqueue(new Callback<InvokeResponseModel>() {
                 @Override

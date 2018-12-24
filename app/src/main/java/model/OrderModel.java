@@ -90,7 +90,9 @@ public class OrderModel implements Serializable{
 
     @Override
     public String toString() {
-        return "Model{" + "tx_id=" + tx_id + ", holder=" + holder + ", shareName=" + shareName + ", quantity=" + quantity + ", price=" + price + ", timestamp=" + timestamp + '}';
+        String s;
+        s="Share: "+ shareName+". Quantity: "+quantity+". Price: "+price+". Time: "+date.toString();
+        return s;
     }
 
 }

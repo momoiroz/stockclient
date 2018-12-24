@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity implements LoginResponse {
     UserLogResponseModel ulr;
     LoginResponse lr = this;
     SharedPreferences sharedPref;
+    boolean login = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements LoginResponse {
             Toast.makeText(this, "Login successfully", Toast.LENGTH_SHORT).show();
             af = new AppFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,af,"app_frag").commit();
+            login=true;
         }
     }
 
@@ -49,11 +51,16 @@ public class MainActivity extends AppCompatActivity implements LoginResponse {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.logout:
-                logout();
-                break;
-            default:break;
+        if (login) {
+            switch (item.getItemId()) {
+                case R.id.logout:
+                    logout();
+                    login=false;
+                    break;
+                default:break;
+            }
+        }else {
+            Toast.makeText(this, "You've already logged out.", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }

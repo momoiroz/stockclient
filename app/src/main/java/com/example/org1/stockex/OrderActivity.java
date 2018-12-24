@@ -13,6 +13,7 @@ import android.widget.Toast;
 import control.ApiRequest;
 import itf.InvokeResponseInterface;
 import model.HolderQueryResponseModel;
+import model.InvokeBuyObject;
 import model.InvokeResponseModel;
 
 public class OrderActivity extends AppCompatActivity implements InvokeResponseInterface {
@@ -89,7 +90,8 @@ public class OrderActivity extends AppCompatActivity implements InvokeResponseIn
                 mBtnBack.setEnabled(false);
                 if (checkCondition()) {
                     String[] args = setArgs();
-                    api.invokeOrderRequest(args);
+                    InvokeBuyObject ibo = new InvokeBuyObject(args);
+                    api.invokeOrderRequest(ibo);
                 } else {
                     mBtnBuy.setEnabled(true);
                     mBtnBack.setEnabled(true);

@@ -65,8 +65,10 @@
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/pool_reserved_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="10">
+        android:layout_weight="100"
+        android:orientation="vertical">
     </LinearLayout>
 </LinearLayout>

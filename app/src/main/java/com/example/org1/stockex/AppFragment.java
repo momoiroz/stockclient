@@ -12,9 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
@@ -29,13 +27,14 @@ import model.OrderModel;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AppFragment extends Fragment implements HolderResponse, PoolResponse {
+public class AppFragment extends Fragment implements HolderResponse{
     TextView mTvHolder;
     TextView mTvGem;
     Button mBtnStockPosition,mBtnBuy,mBtnSell;
     SharedPreferences sharedPref;
     ApiRequest api;
     MiscFunction miscFuntion = new MiscFunction();
+    PoolAreaFragment poolAreaFragment;
     HolderQueryResponseModel hqr;
     JsonElement element;
     String holder;
@@ -71,7 +70,6 @@ public class AppFragment extends Fragment implements HolderResponse, PoolRespons
         getDataThread getDataThread = new getDataThread();
         dataThread = new Thread(getDataThread);
         dataThread.start();
-        api.matchPoolRequest();
         return v;
     }
 
@@ -79,6 +77,8 @@ public class AppFragment extends Fragment implements HolderResponse, PoolRespons
     public void onDetach() {
         super.onDetach();
         bool=false;
+        poolAreaFragment.onDetach();
+        poolAreaFragment.onDestroy();
     }
 
     public void mapping(View v){
@@ -92,6 +92,8 @@ public class AppFragment extends Fragment implements HolderResponse, PoolRespons
             mTvHolder.setText(holder);
         }
         mTvGem = v.findViewById(R.id.tv_gem);
+        poolAreaFragment = new PoolAreaFragment();
+        getFragmentManager().beginTransaction().replace(R.id.pool_reserved_layout,poolAreaFragment).commit();
         api = new ApiRequest(getActivity());
     }
     public void setListener(){
@@ -133,39 +135,6 @@ public class AppFragment extends Fragment implements HolderResponse, PoolRespons
         else {
             this.hqr = hqr;
             mTvGem.setText("Gem available: "+this.hqr.getGem());
-        }
-    }
-
-    @Override
-    public void invokeBuyPoolResponse(boolean success, JsonElement element) {
-        if (!success) {
-        }
-        else {
-            this.element = element;
-            ArrayList<OrderModel> buyOrderModel = miscFuntion.convertJsonToOrderObject(element);
-           Toast.makeText(getActivity(),buyOrderModel.get(1).getTx_id(),Toast.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
-    public void invokeSellPoolResponse(boolean success, JsonElement element) {
-        if (!success) {
-        }
-        else {
-            this.element = element;
-            ArrayList<OrderModel> sellOrderModel = miscFuntion.convertJsonToOrderObject(element);
-            Toast.makeText(getActivity(),sellOrderModel.get(0).getTx_id(),Toast.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
-    public void invokeMatchPoolResponse(boolean success, JsonElement element) {
-        if (!success) {
-        }
-        else {
-            this.element = element;
-            ArrayList<MatchModel> matchOrderModel = miscFuntion.convertJsonToMatchObject(element);
-            Toast.makeText(getActivity(),matchOrderModel.get(1).getPrice(),Toast.LENGTH_LONG).show();
         }
     }
 
