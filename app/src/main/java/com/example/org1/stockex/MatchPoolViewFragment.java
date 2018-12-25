@@ -157,7 +157,7 @@ public class MatchPoolViewFragment extends Fragment implements InvokeInterface {
 
                 @Override
                 public void onFailure(Call<JsonElement> call, Throwable t) {
-                    Toast.makeText(activity, "Connection error. Cannot connect to the server!", Toast.LENGTH_LONG).show();
+                   // Toast.makeText(activity, "Connection error. Cannot connect to the server!", Toast.LENGTH_LONG).show();
                 }
             });
         }

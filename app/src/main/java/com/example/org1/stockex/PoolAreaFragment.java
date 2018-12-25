@@ -44,7 +44,7 @@ public class PoolAreaFragment extends Fragment {
                 sellInvokeInterface.invokeSell();
                 matchInvokeInterface.invokeMatch();
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
